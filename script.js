@@ -86,15 +86,45 @@ function grigliaFunc(numeroBox) {
         box.style.cursor = "pointer";
         // Aggiungo tutte le classi bootstrap che mi servono
         box.classList.add("d-flex", "border", "border-dark", "justify-content-center", "align-items-center", "fw-bold", "text-dark", "text-decoration-none", "user-select-none");
-        
+
         // Aggiungo il testo -> numero scritto in ogni box = indice/ordine da 1
         box.textContent = i;
-        
+
         // Inserisci il box nella row del contenitore griglia
         row.append(box);
 
         // Aggiungi evento che modifica lo stile al click
         box.addEventListener("click", active);
+    }
+
+    // Valore numero delle bombe = numeroBox
+    numeroBombe(numeroBox);
+}
+
+
+/* FUNZIONE -> genera un numero random tra i valori minValue e maxValue */
+function randomNumber(minValue, maxValue) {
+    return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+}
+
+/* FUNZIONE -> genera griglia bombe */
+function numeroBombe(numeroBox) {
+
+    // Array -> bombe-vuoto
+    let numeroBombe = [];
+
+    // Ciclo while -> "associa" l'indice dei box alle bombe
+    while (numeroBombe.length < 16) {
+
+        // assegna un numero random alla bomba tra 1 e il numero dei box creati
+        let bomba = randomNumber(1, numeroBox);
+        // Includes -> determina se un array include un certo valore tra le sue 
+        //             voci (risultato TRUE o FALSE) = bombe non ripetute
+        let bombaBoom = numeroBombe.includes(bomba);
+        // Aggiungi numero solo se già presente
+        if (!bombaBoom) {
+            numeroBombe.push(bomba);
+        }
     }
 }
 
