@@ -1,11 +1,24 @@
 /*
-1) L’utente indica un livello di difficolta in base al quale viene 
-    generata una griglia di gioco quadrata, in cui ogni cella contiene 
-    un numero tra quelli compresi in un range:
-    - con difficolta 1 => tra 1 e 100
-    - con difficolta 2 => tra 1 e 81
-    - con difficolta 3 => tra 1 e 49
-2) Quando l’utente clicca su ogni cella, la cella cliccata si colora di azzurro.
+1) L’utente indica un livello di difficoltà in base al quale viene generata una
+   griglia di gioco quadrata, in cui ogni cella contiene un numero tra quelli 
+   compresi in un range:
+   - con difficoltà 1 => tra 1 e 100
+   - con difficoltà 2 => tra 1 e 81
+   - con difficoltà 3 => tra 1 e 49
+2) Il computer deve generare 16 numeri casuali (le bombe) tenendo conto della 
+   difficoltà scelta:
+   - difficolta 1 = tra 1 e 100
+   - difficoltà 2 = tra 1 e 81
+   - difficoltà 3 = tra 1 e 49
+   NB: I numeri nella lista delle bombe non possono essere duplicati.
+3) In seguito l’utente clicca su ogni cella e se il numero è presente nella lista 
+   dei numeri generati
+   - abbiamo calpestato una bomba e la cella si colora di rosso e la partita termina
+   - altrimenti la cella cliccata si colora di azzurro e l’utente può continuare
+4) La partita termina quando il giocatore clicca su una bomba o raggiunge il numero 
+   massimo possibile di numeri consentiti.
+5) Al termine della partita il software deve scoprire tutte le bombe e comunicare il
+   punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
 */
 
 
@@ -19,122 +32,28 @@ console.log(iniziaGioco);
 const griglia = document.getElementById("griglia");
 console.log(griglia);
 
-
-/* FUNZIONE -> numero dei box in base alla scelta */
-function contenutoBox(diffScelta) {
-    // Dichiaro la variabie che cambierà a seconda della scelta
-    let numeroBox;
-
-    // Switch: "passo" la scelta nelle 3 opzioni
-    switch (parseInt(diffScelta)) {
-        case 1:
-            numeroBox = 100;
-            break;
-        case 2:
-            numeroBox = 81;
-            break;
-        case 3:
-            numeroBox = 49;
-            break;
-    }
-    // Estrai il valore "numero di box nella griglia"
-    return numeroBox;
-}
-
-
-/* CLICK -> "al click" su PLAY devi fare ... */
+// EVENTO AL CLICK SU "GIOCA" distribuzione box e bombe
 iniziaGioco.addEventListener("click", function () {
     // Svuota griglia
     griglia.innerHTML = "";
+    
+    iniziaGioco.textContent = "Riprova";
 
     // Che difficoltà è stata scelta ?
     const diffScelta = difficolta.value;
 
     // Con la funzione contenutoBox -> numero di box nella griglia creata
     numeroBox = contenutoBox(diffScelta);
+
     console.log(`Il numero di box creati per la difficoltà ${diffScelta} è ${numeroBox}`);
 
+    let numeroBombe = distribuzioneBombe(numeroBox);
     // Con la funzione grigliaFunc -> griglia regolare con box quadrati 
-    grigliaFunc(numeroBox);
+    grigliaFunc(numeroBox, numeroBombe);
+
 });
 
 
-/* FUNZIONE -> genera la griglia e tutti i suoi elementi */
-function grigliaFunc(numeroBox) {
-
-    // Crea la "row" che conterrà tutti i box
-    let row = document.createElement("div");
-    row.classList.add("row");
-
-    // Inserisci la row nel contenitore griglia
-    griglia.append(row);
-
-    // Calcolo per dividere equamente i box nelle righe
-    let boxWidth = numeroBox / Math.sqrt(numeroBox);
-
-    // Variabile del singolo box vuota
-    let box;
-
-    // Ciclo -> creo i box a seconda della scelta dell'utente e gli do uno "stile"
-    for (let i = 1; i <= numeroBox; i++) {
-
-        // Crea l'elemento html "cliccabile"
-        box = document.createElement("a");
-        // Stile dei box con il calcolo visto in classe (no bootstrap)
-        box.style.width = (100 / boxWidth) + "%";
-        box.style.height = (100 / boxWidth) + "%";
-        box.style.cursor = "pointer";
-        // Aggiungo tutte le classi bootstrap che mi servono
-        box.classList.add("d-flex", "border", "border-dark", "justify-content-center", "align-items-center", "fw-bold", "text-dark", "text-decoration-none", "user-select-none");
-
-        // Aggiungo il testo -> numero scritto in ogni box = indice/ordine da 1
-        box.textContent = i;
-
-        // Inserisci il box nella row del contenitore griglia
-        row.append(box);
-
-        // Aggiungi evento che modifica lo stile al click
-        box.addEventListener("click", active);
-    }
-
-    // Valore numero delle bombe = numeroBox
-    numeroBombe(numeroBox);
-}
-
-
-/* FUNZIONE -> genera un numero random tra i valori minValue e maxValue */
-function randomNumber(minValue, maxValue) {
-    return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
-}
-
-/* FUNZIONE -> genera griglia bombe */
-function numeroBombe(numeroBox) {
-
-    // Array -> bombe-vuoto
-    let numeroBombe = [];
-
-    // Ciclo while -> "associa" l'indice dei box alle bombe
-    while (numeroBombe.length < 16) {
-
-        // assegna un numero random alla bomba tra 1 e il numero dei box creati
-        let bomba = randomNumber(1, numeroBox);
-        // Includes -> determina se un array include un certo valore tra le sue 
-        //             voci (risultato TRUE o FALSE) = bombe non ripetute
-        let bombaBoom = numeroBombe.includes(bomba);
-        // Aggiungi numero solo se già presente
-        if (!bombaBoom) {
-            numeroBombe.push(bomba);
-        }
-    }
-}
-
-
-/* FUNZIONE -> al click sul BOX togli/metti le classi */
-function active() {
-    // THIS -> elemento che ha "scatenato" l'evento al click
-    this.classList.toggle("active");
-    this.classList.toggle("text-white");
-}
 
 
 
