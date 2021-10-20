@@ -1,0 +1,22 @@
+/* --- TAG --- */
+header .navbar-brand {
+    display: inline-block;
+    height: 100%;
+    padding: 0;
+}
+
+main section {
+    background-image: linear-gradient(white, lightgrey);
+}
+
+/* id #griglia */
+#griglia {
+    width: 600px;
+}
+
+/* classe .active */
+.active {
+    background-color: lightskyblue;
+    color: white;
+}
+
