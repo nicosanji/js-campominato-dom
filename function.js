@@ -78,9 +78,10 @@ function active(numeroBombe) {
     let Lose = false;
     // Condizione -> se gli "indici" coincidono
     if (numeroBombe.includes(numeroI)) {
+
         this.classList.add("bg-danger");
         Lose = true;
-        alert("Hai beccato una mina ! Per ricominciare fai click su Gioca");
+        alert("BOOM ! Hai beccato una bomba");
     }
 }
 
