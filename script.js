@@ -21,6 +21,7 @@
    punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
 */
 
+"use strict";
 
 // Prendo l'elemento html -> select (easy, medium, hard)
 const difficolta = document.getElementById("difficolta");
@@ -43,7 +44,7 @@ iniziaGioco.addEventListener("click", function () {
     const diffScelta = difficolta.value;
 
     // Con la funzione contenutoBox -> numero di box nella griglia creata
-    numeroBox = contenutoBox(diffScelta);
+    let numeroBox = contenutoBox(diffScelta);
 
     console.log(`Il numero di box creati per la difficoltà ${diffScelta} è ${numeroBox}`);
 
