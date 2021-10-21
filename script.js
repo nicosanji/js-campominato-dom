@@ -35,22 +35,22 @@ console.log(griglia);
 
 // EVENTO AL CLICK SU "GIOCA" distribuzione box e bombe
 iniziaGioco.addEventListener("click", function () {
-    // Svuota griglia
-    griglia.innerHTML = "";
+   // Svuota griglia
+   griglia.innerHTML = "";
     
-    iniziaGioco.textContent = "Riprova";
+   iniziaGioco.textContent = "Riprova";
 
-    // Che difficoltà è stata scelta ?
-    const diffScelta = difficolta.value;
+   // Che difficoltà è stata scelta ?
+   const diffScelta = difficolta.value;
 
     // Con la funzione contenutoBox -> numero di box nella griglia creata
-    let numeroBox = contenutoBox(diffScelta);
+   let numeroBox = contenutoBox(diffScelta);
 
-    console.log(`Il numero di box creati per la difficoltà ${diffScelta} è ${numeroBox}`);
+   console.log(`Il numero di box creati per la difficoltà ${diffScelta} è ${numeroBox}`);
 
-    let numeroBombe = distribuzioneBombe(numeroBox);
-    // Con la funzione grigliaFunc -> griglia regolare con box quadrati 
-    grigliaFunc(numeroBox, numeroBombe);
+   let numeroBombe = distribuzioneBombe(numeroBox);
+   // Con la funzione grigliaFunc -> griglia regolare con box quadrati 
+   grigliaFunc(numeroBox, numeroBombe);
 
 });
 

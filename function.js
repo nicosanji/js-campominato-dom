@@ -1,3 +1,5 @@
+"use strict"
+
 /* FUNZIONE -> numero dei box in base alla scelta */
 function contenutoBox(diffScelta) {
     // Dichiaro la variabie che cambierà a seconda della scelta
